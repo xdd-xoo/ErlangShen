@@ -89,6 +89,11 @@ span {padding: 4px;margin: 4px;}
         f.write(title+"\n")
         f.write(category+"\n")
 
+def update_report(device_with_time_stamp,result):
+
+    with file("report\ErLangShen_Report_%s","a") as f :
+        r.write(result+"\n") 
+
 
 def test_install_apk(device,apk_path,time_stamp):
 
@@ -203,7 +208,7 @@ def main():
                 clr.print_blue_text("*** %d device(s) connected ***"%task_len)
                 for weapon in sorted(ErlangShen_weapons.keys()):
                     if weapon == "install":
-                        clr.print_green_text("ErlangShen would spaw %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
+                        clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
                         pool = multiprocessing.Pool(processes=task_len)
                         for device in get_devices_list():
                             pool.apply_async(ErlangShen_weapons[weapon],(device,apk,time_stamp))
@@ -211,7 +216,7 @@ def main():
                         pool.join()
 
                     if weapon == "launch":
-                        clr.print_green_text("ErlangShen would spaw %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
+                        clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
                         pool = multiprocessing.Pool(processes=task_len)
                         for device in get_devices_list():
                             pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],apk_info[1],time_stamp,))
@@ -219,7 +224,7 @@ def main():
                         pool.join()
                     
                     if weapon == "monkey":
-                        clr.print_green_text("ErlangShen would spaw %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
+                        clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
                         pool = multiprocessing.Pool(processes=task_len)
                         for device in get_devices_list():
                             pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,))
@@ -227,7 +232,7 @@ def main():
                         pool.join()
                     
                     if weapon == "uninstall":
-                        clr.print_green_text("ErlangShen would spaw %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
+                        clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
                         pool = multiprocessing.Pool(processes=task_len)
                         for device in get_devices_list():
                             pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,))
