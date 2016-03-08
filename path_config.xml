@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<config>
+  <apkSrc>
+    <path name="C:\Dropbox\APKs"/>
+  </apkSrc>
+  <Monkey>
+  	<interval vaule="500"/>
+  	<eventCount vaule="200"/>
+  </Monkey>
+</config>
