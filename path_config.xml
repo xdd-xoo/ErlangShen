@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <config>
   <apkSrc>
-    <path name="C:\Dropbox\APKs"/>
+    <path name="C:\Dropbox\APKs\Apps"/>
   </apkSrc>
   <Monkey>
   	<interval vaule="500"/>

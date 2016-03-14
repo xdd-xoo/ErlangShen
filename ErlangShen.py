@@ -324,7 +324,7 @@ def main():
                     
                     if label_install and label_launch and label_monkey and label_uninstall:
                         update_report(report_path,report_comptablilty%("pass","Pass"))
-                    if not label_monkey:
+                    if not label_monkey and label_install and label_launch and label_uninstall:
                         update_report(report_path,report_comptablilty%("warning","Warning"))
                     if not label_install or not label_launch or not label_uninstall:
                         update_report(report_path,report_comptablilty%("fail","Fail"))
