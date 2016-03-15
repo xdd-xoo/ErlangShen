@@ -46,8 +46,9 @@ def generate_apk_info(apk_path):
             pkg_name = re.findall("package: name='(\S*)'",info)[0]
             launchable_activity = re.findall("launchable-activity: name='(\S*)'",info)[0]
         except IndexError as e:
-            print "generate apk info failed" + str(e) + "\n Please update the %s"%os.path.split(apk_path)[-1]  
-            return False
+            print "generate apk info failed\n" + str(e) 
+            clr.print_red_text("\nPlease update the %s\n"%os.path.split(apk_path)[-1])
+            return None
         if pkg_name and launchable_activity:
             return pkg_name,launchable_activity
     
@@ -203,6 +204,7 @@ def main():
 
     try:
         apk_list = get_apk_src()
+        app_index = 1
         for apk in apk_list:
             task_len = len(get_devices_list())
 
@@ -216,7 +218,9 @@ def main():
             if not apk_info:
                 continue
             result_of_one_loop = []
+            
             if task_len:
+                clr.print_blue_text("***This is the %d APP test: %s***"%(app_index,os.path.split(apk)[-1]))
                 clr.print_blue_text("*** %d device(s) connected ***"%task_len)
                 for weapon in sorted(ErlangShen_weapons.keys()):
                     child_result = []
@@ -287,7 +291,7 @@ def main():
                     except IndexError:
                         print "device was offline"
                     report_path = "report\ErLangShen_Report_%s_%s.html"%(device,time_stamp)
-                    update_report(report_path,report_index%(apk_list.index(apk)+1,os.path.split(apk)[-1]))
+                    update_report(report_path,report_index%(app_index,os.path.split(apk)[-1]))
                     for step in chain:
                         step_result = step.get()
                         if step_result.keys()==["Install"]:
@@ -341,10 +345,13 @@ def main():
                     if not label_uninstall:
                         update_report(report_path,failure_desc%("Uninstall",chain[3].get().values()))
                     item +=1
+            app_index +=1
+
 
     except Exception as e:
         print "[Exception]" + str(e) 
     finally:
+        clr.print_green_text("================ALL TEST COMPLETE===============")
         sys.exit()
         
 
