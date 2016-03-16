@@ -87,7 +87,7 @@ span {padding: 4px;margin: 4px;}
 </div>
 <div class="second">
 <table style="width:1200px;margin-top:40px;">
-    <tr><th>Index</th><th>APP</th><th>Install</th><th>Launch</th><th>Monkey</th><th>Uninstall</th><th>Compatibility Conclusion</th></tr>"""
+<tr><th>Index</th><th>APP</th><th>Install</th><th>Launch</th><th>Monkey</th><th>Uninstall</th><th>Compatibility Conclusion</th></tr>"""
 
     with file("report\%s.html"%device_wtih_timestamp,"w") as f:
         f.write(css+"\n") 
@@ -98,6 +98,34 @@ def update_report(report_path,result):
 
     with file(report_path,"a") as f :
         f.write(result) 
+
+def summary_report(report_path,device,meta_build,android_version,start_date,end_date,total_app_number,passing,fail,warn):
+
+    last_and_third_table_div= """</table>
+</div>
+<div class="first">
+<table style="width:700px;margin-top:20px;">"""
+    result_summary = """    <tr><th>Result Summary</th><td>
+        <table style="width: 100%;">"""
+    all_end  = """        </table>
+    </td></tr>
+</table>
+</div>
+</div>"""
+
+    with file("report\%s.html"%report_path,"a") as f:
+        f.write(last_and_third_table_div+"\n")
+        f.write(meta_build+"\n")
+        f.write(android_version+"\n")
+        f.write(device+"\n")
+        f.write(start_date+"\n")
+        f.write(end_date+"\n")
+        f.write(total_app_number+"\n")
+        f.write(result_summary+"\n")
+        f.write(passing + "\n")
+        f.write(fail + "\n")
+        f.write(warn + "\n")
+
 
 
 def test_install_apk(device,apk_path,time_stamp):
@@ -165,7 +193,14 @@ def test_monkey_run(device,pkg_name,time_stamp):
         write_result_to_devicetxt(device,'"Monkey":"Fail %s",'%failure_reason,time_stamp)
         if not failure_reason:
             return {"Monkey":"failure reason could not be found or the app install failed"}
-        return {"Monkey":failure_reason}
+        current_time_stamp =  time.strftime("%Y%m%d_%H-%M-%S", time.localtime())
+        dump_path = "log" + os.sep + pkg_name + "_" + current_time_stamp
+        os.system("mkdir %s"%dump_path)
+        os.system("adb -s %s pull /data/anr %s"%(device,dump_path))
+        os.system("adb -s %s pull /data/tombstones %s"%(device,dump_path))
+        with file("%s\monkey_log.txt"%dump_path,"w") as f:
+                f.write(monkey_result)
+        return {"Monkey":failure_reason}    
 
 
 def test_uninstall_apk(device,pkg_name,time_stamp):
@@ -184,14 +219,19 @@ def test_uninstall_apk(device,pkg_name,time_stamp):
             return {"Uninstall":"failure reason could not be found"}
         return {"Uninstall":failure_reason}
 
+def config_counter():
+    counter_dict = {}
+    for device in get_devices_list():
+        counter_dict[device]={"pass_counter":0,"warning_counter":0,"fail_counter":0}
+    return counter_dict
 
 def main():
-
     global apk_info
     global log_path 
     global time_stamp
+    global config_counter
     time_stamp = time.strftime("%m%d%Y_%H.%M.%S", time.localtime())
-
+    start_time_stamp = time.strftime("%m/%d/%Y %X", time.localtime())
     for device in get_devices_list():
         report_path= "ErLangShen_Report_%s_%s"%(device,time_stamp)
         init_report(report_path)
@@ -203,25 +243,26 @@ def main():
                           "uninstall" : test_uninstall_apk}
 
     try:
+        task_len = len(get_devices_list())
+        if not task_len :
+            raise "No device connected or devices offline"
+        for device in get_devices_list():
+            os.popen("adb -s %s root "%device)
+            os.popen("adb -s %s wait-for-device remount"%device)
+        task_len_root = len(get_devices_list())
+        if task_len != task_len_root:
+            clr.print_red_text("Having devices root failed. ErLangShen would give up these devices!!!")
         apk_list = get_apk_src()
         app_index = 1
-        for apk in apk_list:
-            task_len = len(get_devices_list())
-
-
-            if task_len == 0:
-                print "No device connected or devices offline"
-                break  
-
+        counter_dict = config_counter()
+        for apk in apk_list: 
             apk_info = generate_apk_info(apk)
-
             if not apk_info:
                 continue
-            result_of_one_loop = []
-            
-            if task_len:
-                clr.print_blue_text("***This is the %d APP test: %s***"%(app_index,os.path.split(apk)[-1]))
+            result_of_one_loop = []            
+            if task_len_root:
                 clr.print_blue_text("*** %d device(s) connected ***"%task_len)
+                clr.print_blue_text("*** The %d App Testing: %s ***"%(app_index,os.path.split(apk)[-1]))
                 for weapon in sorted(ErlangShen_weapons.keys()):
                     child_result = []
                     if weapon == "install":
@@ -231,10 +272,7 @@ def main():
                             child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk,time_stamp)))
                         pool.close()
                         pool.join()
-
-
                         result_of_one_loop.append(child_result)
-
 
                     if weapon == "launch":
                         clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
@@ -243,8 +281,6 @@ def main():
                             child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],apk_info[1],time_stamp,)))
                         pool.close()
                         pool.join()
-
-
                         result_of_one_loop.append(child_result)
 
                     if weapon == "monkey":
@@ -254,7 +290,6 @@ def main():
                             child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,)))
                         pool.close()
                         pool.join()                        
-
                         result_of_one_loop.append(child_result)
 
                     if weapon == "uninstall":
@@ -264,10 +299,7 @@ def main():
                             child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,)))
                         pool.close()
                         pool.join()
-
                         result_of_one_loop.append(child_result)
-
-
             else:
                 clr.print_red_text("No device connected")
 
@@ -328,10 +360,16 @@ def main():
                     
                     if label_install and label_launch and label_monkey and label_uninstall:
                         update_report(report_path,report_comptablilty%("pass","Pass"))
+                        if counter_dict.has_key(device):
+                            counter_dict[device]["pass_counter"] += 1
                     if not label_monkey and label_install and label_launch and label_uninstall:
                         update_report(report_path,report_comptablilty%("warning","Warning"))
+                        if counter_dict.has_key(device):
+                            counter_dict[device]["warning_counter"] += 1
                     if not label_install or not label_launch or not label_uninstall:
                         update_report(report_path,report_comptablilty%("fail","Fail"))
+                        if counter_dict.has_key(device):
+                            counter_dict[device]["fail_counter"] += 1
 
                     if not label_install:
                         update_report(report_path,failure_desc%("Install",chain[0].get().values()))
@@ -347,6 +385,29 @@ def main():
                     item +=1
             app_index +=1
 
+        Meta_Build = '<tr><th>Meta Build</th><td>%s</td></tr>'
+        Android_Version = '<tr><th>Android Version</th><td>%s</td></tr>'      
+        Device = '<tr><th>Device</th><td>%s</td></tr>'
+        Start_Date = '<tr><th>Start Date</th><td>%s</td></tr>'%str(start_time_stamp)
+        end_time_stamp = time.strftime("%m/%d/%Y %X", time.localtime())
+        End_Date = '<tr><th>End Date</th><td>%s</td></tr>'%str(end_time_stamp)
+        Total_APP_Number = '<tr><th>Total APP Number</th><td>%d</td></tr>'%(app_index-1)
+        Pass = "<tr><td class='pass'>Pass</td><td>%d</td></tr>"
+        Fail = "<tr><td class='fail'>Fail</td><td>%d</td></tr>"
+        Warn = "<tr><td class='warning'>Warning</td><td>%d</td></tr>"
+        for device in get_devices_list():
+            clr.print_blue_text("start to summary %s report "%device)
+            report_path= "ErLangShen_Report_%s_%s"%(device,time_stamp)
+            os.popen("adb -s %s root "%device)
+            os.popen("adb -s %s wait-for-device remount"%device)
+            build = os.popen("adb -s %s shell cat /firmware/verinfo/ver_info.txt"%device).read().strip()
+            version = os.popen("adb -s %s shell getprop ro.build.version.release"%device).read().strip()
+            if counter_dict.has_key(device):
+                pass_value = counter_dict[device]["pass_counter"]
+                warning_value = counter_dict[device]["warning_counter"]
+                fail_value = counter_dict[device]["fail_counter"]
+            summary_report(report_path,Device%device,Meta_Build%build,Android_Version%version,Start_Date,End_Date,Total_APP_Number,\
+                            Pass%pass_value,Fail%fail_value,Warn%warning_value)
 
     except Exception as e:
         print "[Exception]" + str(e) 
@@ -357,5 +418,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    #print config_counter()
     
     
