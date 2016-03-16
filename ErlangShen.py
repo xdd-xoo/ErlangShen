@@ -245,7 +245,7 @@ def main():
     try:
         task_len = len(get_devices_list())
         if not task_len :
-            raise "No device connected or devices offline"
+            raise IndexError ,"No device connected or devices offline"
         for device in get_devices_list():
             os.popen("adb -s %s root "%device)
             os.popen("adb -s %s wait-for-device remount"%device)
