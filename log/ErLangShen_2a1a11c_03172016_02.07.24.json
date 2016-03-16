@@ -1,0 +1,6 @@
+{"com.happyelements.AndroidAnimal.apk":{"Install":"Failed ","Launch":"Failed Error type 3","Monkey":"Fail ","Uninstall":"Failed Failure [DELETE_FAILED_INTERNAL_ERROR]"}}
+{"com.igoatech.shuashua.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Fail // CRASH: com.google.android.gms (pid 8844)","Uninstall":"Pass"}}
+{"com.oupeng.mini.android.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Pass","Uninstall":"Pass"}}
+{"com.sina.weibo.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Fail // NOT RESPONDING: com.sina.weibo (pid 15980)// CRASH: com.google.process.location (pid 17082)// CRASH: com.google.process.gapps (pid 16934)// CRASH: com.google.android.gms (pid 17103)","Uninstall":"Pass"}}
+{"com.yo.voicetranslate.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Pass","Uninstall":"Pass"}}
+{"vStudio.Android.Camera360.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Fail // CRASH: com.google.process.gapps (pid 19086)// CRASH: com.google.android.gms (pid 19060)","Uninstall":"Pass"}}

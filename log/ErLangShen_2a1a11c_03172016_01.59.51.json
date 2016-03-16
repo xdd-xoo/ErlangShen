@@ -1,0 +1,3 @@
+{"com.happyelements.AndroidAnimal.apk":{"Install":"Failed Failure [0]","Launch":"Failed Error type 3","Monkey":"Fail ","Uninstall":"Failed Failure [DELETE_FAILED_INTERNAL_ERROR]"}}
+{"com.igoatech.shuashua.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Pass","Uninstall":"Pass"}}
+{"com.oupeng.mini.android.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Fail // NOT RESPONDING: com.sohu.inputmethod.sogou (pid 0)","Uninstall":"Pass"}}
