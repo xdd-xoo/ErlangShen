@@ -1,0 +1,2 @@
+{"com.igoatech.shuashua.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Pass","Uninstall":"Pass"}}
+{"com.oupeng.mini.android.apk":{"Install":"Failed Failure [INSTALL_FAILED_UID_CHANGED]","Launch":"Failed Error type 3","Monkey":"Fail ","Uninstall":"Failed Failure [DELETE_FAILED_INTERNAL_ERROR]"}}

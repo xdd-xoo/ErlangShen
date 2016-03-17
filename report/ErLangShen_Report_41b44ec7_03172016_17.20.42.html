@@ -1,0 +1,51 @@
+<style>
+table {border-collapse: collapse;}
+td, th {border:1px solid #aaaaaa;padding:4px;}
+th {font: bold 1em; background: #bfbfff; text-align:center}
+span {padding: 4px;margin: 4px;}
+.pass {color: #2db300;text-align:center}
+.fail {color: #ff2626;text-align:center}
+.warning {color: #ff9326;text-align:center}
+.failure_desc {background: #dfdfd0; color: red;}
+.slogon {color:#888888}
+.container {display: table; width: 100%; }
+.third {display: table-footer-group;}
+.second {display: table-row-group;}
+.first {display: table-header-group;}
+</style>
+<div>
+<h2>ErLangShen Test Report</h2>
+<p>- 3rdparty APP test automation by PDT -</p>
+<hr style='width: 300px;' align="left">
+</div>
+
+<div class="container">
+<div class='slogon third'>
+<hr align="left" style='width: 300px;margin-top:60px'>
+<p>Test Automation. Powered By PDT.CHINA.TDA.</p>
+<p>All the tool/test data disclosed in this report should be kept confidential inside PDT team.</p>
+</div>
+<div class="second">
+<table style="width:1200px;margin-top:40px;">
+<tr><th>Index</th><th>APP</th><th>Install</th><th>Launch</th><th>Monkey</th><th>Uninstall</th><th>Compatibility Conclusion</th></tr>
+<tr><th>1</th><td>com.igoatech.shuashua.apk</td><td class=pass>Pass</td><td class=pass>Pass</td><td class=pass>Pass</td><td class=pass>Pass</td><td class=pass>Pass</td></tr>
+<tr><th>2</th><td>com.oupeng.mini.android.apk</td><td class=fail>Fail</td><td class=fail>Fail</td><td class=fail>Fail</td><td class=fail>Fail</td><td class=fail>Fail</td></tr>
+<tr><td colspan="7" class="failure_desc">Install failure reason: ['Failure [INSTALL_FAILED_UID_CHANGED]']</td></tr>
+<tr><td colspan="7" class="failure_desc">Launch failure reason: ['Error type 3']</td></tr>
+<tr><td colspan="7" class="failure_desc">Monkey failure reason: ['failure reason could not be found or the app install failed']</td></tr>
+<tr><td colspan="7" class="failure_desc">Uninstall failure reason: ['Failure [DELETE_FAILED_INTERNAL_ERROR]']</td></tr>
+</table>
+</div>
+<div class="first">
+<table style="width:700px;margin-top:20px;">
+<tr><th>Meta Build</th><td>MSM8937.LA.1.0.r2-00001-STD.PROD-1</td></tr>
+<tr><th>Android Version</th><td>6.0.1</td></tr>
+<tr><th>Device</th><td>41b44ec7</td></tr>
+<tr><th>Start Date</th><td>03/17/2016 17:20:42</td></tr>
+<tr><th>End Date</th><td>03/17/2016 17:22:25</td></tr>
+<tr><th>Total APP Number</th><td>2</td></tr>
+    <tr><th>Result Summary</th><td>
+        <table style="width: 100%;">
+<tr><td class='pass'>Pass</td><td>1</td></tr>
+<tr><td class='fail'>Fail</td><td>1</td></tr>
+<tr><td class='warning'>Warning</td><td>0</td></tr>

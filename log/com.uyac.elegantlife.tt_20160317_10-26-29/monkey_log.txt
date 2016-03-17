@@ -1,0 +1,129 @@
+:Monkey: seed=1458211497814 count=200
+:AllowPackage: com.uyac.elegantlife.tt
+:IncludeCategory: android.intent.category.LAUNCHER
+:IncludeCategory: android.intent.category.MONKEY
+// Selecting main activities from category android.intent.category.LAUNCHER
+//   - NOT USING main activity com.android.contacts.activities.PeopleActivity (from package com.android.contacts)
+//   - NOT USING main activity com.android.dialer.DialtactsActivity (from package com.android.dialer)
+//   - NOT USING main activity com.android.mms.ui.ConversationList (from package com.android.mms)
+//   - NOT USING main activity com.android.settings.Settings (from package com.android.settings)
+//   - NOT USING main activity com.android.settings.Settings$TetherSettingsActivity (from package com.android.settings)
+//   - NOT USING main activity com.android.soundrecorder.SoundRecorder (from package com.android.soundrecorder)
+//   - NOT USING main activity com.android.browser.BrowserLauncher (from package com.android.browser)
+//   - NOT USING main activity com.cyanogenmod.filemanager.activities.NavigationActivity (from package com.cyanogenmod.filemanager)
+//   - NOT USING main activity com.android.calendar.AllInOneActivity (from package com.android.calendar)
+//   - NOT USING main activity com.android.deskclock.DeskClock (from package com.android.deskclock)
+//   - NOT USING main activity com.android.email.activity.Welcome (from package com.android.email)
+//   - NOT USING main activity com.android.gallery3d.app.GalleryActivity (from package com.android.gallery3d)
+//   - NOT USING main activity com.android.music.MusicBrowserActivity (from package com.android.music)
+//   - NOT USING main activity com.android.music.VideoBrowserActivity (from package com.android.music)
+//   - NOT USING main activity com.android.profile.ProfileMain (from package com.android.profile)
+//   - NOT USING main activity com.android.camera.CameraLauncher (from package org.codeaurora.snapcam)
+//   - NOT USING main activity com.cmcc.homepage.homePage (from package com.cmcc.homepage)
+//   - NOT USING main activity com.dean.areasearch.AreaSearchFirstPage (from package com.dean.areasearch)
+//   - NOT USING main activity com.android.cmcc.service.CmccServer (from package com.android.cmcc)
+//   - NOT USING main activity com.android.providers.downloads.ui.DownloadList (from package com.android.providers.downloads.ui)
+//   - NOT USING main activity com.android.calculator2.Calculator (from package com.android.calculator2)
+//   - NOT USING main activity com.caf.fmradio.FMRadio (from package com.caf.fmradio)
+//   - NOT USING main activity com.android.firewall.FirewallActivity (from package com.android.firewall)
+//   - NOT USING main activity com.qualcomm.qti.securemsm.mdtp.MdtpDemo.MainUserActivity (from package com.qualcomm.qti.securemsm.mdtp.MdtpDemo)
+//   - NOT USING main activity com.cmcc.monternet.cmccMonternet (from package com.cmcc.monternet)
+//   - NOT USING main activity com.android.MyFavorites.MyFavorites (from package com.android.MyFavorites)
+//   - NOT USING main activity com.example.android.notepad.NotesList (from package com.example.android.notepad)
+//   - NOT USING main activity com.qualcomm.qualcommsettings.QualcommSettings (from package com.qualcomm.qualcommsettings)
+//   - NOT USING main activity com.android.quicksearchbox.SearchActivity (from package com.android.quicksearchbox)
+//   - NOT USING main activity com.qualcomm.settings.SetScreenTimeout (from package com.qualcomm.settings)
+//   - NOT USING main activity com.quicinc.wipoweragent.WipowerAgentActivity (from package com.quicinc.wipoweragent)
+//   - NOT USING main activity com.qualcomm.qti.sensors.ui.qsensortest.TabControl (from package com.qualcomm.qti.sensors.qsensortest)
+//   - NOT USING main activity com.cootek.smartinput5.Guide (from package com.cootek.smartinputv5.oem)
+//   + Using main activity com.uyac.elegantlife.tt.WelcomeActivity (from package com.uyac.elegantlife.tt)
+// Selecting main activities from category android.intent.category.MONKEY
+//   - NOT USING main activity com.android.settings.Settings$RunningServicesActivity (from package com.android.settings)
+//   - NOT USING main activity com.android.settings.Settings$StorageUseActivity (from package com.android.settings)
+//   - NOT USING main activity com.android.launcher3.Launcher (from package com.android.launcher3)
+// Seeded: 1458211497814
+// Event percentages:
+//   0: 15.0%
+//   1: 10.0%
+//   2: 2.0%
+//   3: 15.0%
+//   4: -0.0%
+//   5: -0.0%
+//   6: 25.0%
+//   7: 15.0%
+//   8: 2.0%
+//   9: 2.0%
+//   10: 1.0%
+//   11: 13.0%
+:Switch: #Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.uyac.elegantlife.tt/.WelcomeActivity;end
+    // Allowing start of Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.uyac.elegantlife.tt/.WelcomeActivity } in package com.uyac.elegantlife.tt
+Sleeping for 500 milliseconds
+:Sending Touch (ACTION_DOWN): 0:(32.0,505.0)
+:Sending Touch (ACTION_UP): 0:(30.427856,516.625)
+Sleeping for 500 milliseconds
+:Sending Key (ACTION_DOWN): 38    // KEYCODE_J
+:Sending Key (ACTION_UP): 38    // KEYCODE_J
+Sleeping for 500 milliseconds
+:Sending Touch (ACTION_DOWN): 0:(420.0,1849.0)
+:Sending Touch (ACTION_UP): 0:(417.172,1833.276)
+Sleeping for 500 milliseconds
+    // Allowing start of Intent { cmp=com.uyac.elegantlife.tt/.GuideActivity } in package com.uyac.elegantlife.tt
+    // activityResuming(com.uyac.elegantlife.tt)
+:Sending Key (ACTION_DOWN): 82    // KEYCODE_MENU
+:Sending Key (ACTION_UP): 82    // KEYCODE_MENU
+Sleeping for 500 milliseconds
+:Sending Key (ACTION_DOWN): 4    // KEYCODE_BACK
+:Sending Key (ACTION_UP): 4    // KEYCODE_BACK
+Sleeping for 500 milliseconds
+    // activityResuming(com.uyac.elegantlife.tt)
+:Sending Key (ACTION_DOWN): 19    // KEYCODE_DPAD_UP
+:Sending Key (ACTION_UP): 19    // KEYCODE_DPAD_UP
+Sleeping for 500 milliseconds
+:Sending Key (ACTION_DOWN): 20    // KEYCODE_DPAD_DOWN
+:Sending Key (ACTION_UP): 20    // KEYCODE_DPAD_DOWN
+Sleeping for 500 milliseconds
+:Sending Key (ACTION_DOWN): 213    // KEYCODE_MUHENKAN
+:Sending Key (ACTION_UP): 213    // KEYCODE_MUHENKAN
+Sleeping for 500 milliseconds
+:Sending Key (ACTION_DOWN): 20    // KEYCODE_DPAD_DOWN
+:Sending Key (ACTION_UP): 20    // KEYCODE_DPAD_DOWN
+Sleeping for 500 milliseconds
+:Sending Touch (ACTION_DOWN): 0:(676.0,1573.0)
+:Sending Touch (ACTION_POINTER_DOWN 1): 0:(675.8794,1589.1736) 1:(467.0,1722.0)
+:Sending Touch (ACTION_MOVE): 0:(675.766,1599.429) 1:(466.70035,1703.4192)
+:Sending Touch (ACTION_MOVE): 0:(675.6682,1604.1184) 1:(455.70132,1689.3899)
+:Sending Touch (ACTION_POINTER_UP 1): 0:(675.50464,1614.4241) 1:(447.0702,1667.7803)
+:Sending Touch (ACTION_UP): 0:(675.36584,1631.2137)
+Sleeping for 500 milliseconds
+    // Allowing start of Intent { cmp=com.uyac.elegantlife.tt/.MainActivity } in package com.uyac.elegantlife.tt
+    // activityResuming(com.uyac.elegantlife.tt)
+:Sending Key (ACTION_DOWN): 19    // KEYCODE_DPAD_UP
+:Sending Key (ACTION_UP): 19    // KEYCODE_DPAD_UP
+Sleeping for 500 milliseconds
+:Sending Touch (ACTION_DOWN): 0:(722.0,825.0)
+:Sending Touch (ACTION_UP): 0:(724.3018,829.05707)
+Sleeping for 500 milliseconds
+// CRASH: com.uyac.elegantlife.tt (pid 4668)
+// Short Msg: java.lang.ClassCastException
+// Long Msg: java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Integer
+// Build Label: Android/msm8937_64/msm8937_64:6.0.1/MMB29M/lnxbuild03090428:userdebug/test-keys
+// Build Changelist: eng.lnxbuild.20160309.042630
+// Build Time: 1457526559000
+// java.lang.ClassCastException: java.lang.String cannot be cast to java.lang.Integer
+// 	at com.uyac.elegantlife.fragment.MerchantProductIndexFragment.onClick(MerchantProductIndexFragment.java:485)
+// 	at android.view.View.performClick(View.java:5205)
+// 	at android.view.View$PerformClick.run(View.java:21164)
+// 	at android.os.Handler.handleCallback(Handler.java:739)
+// 	at android.os.Handler.dispatchMessage(Handler.java:95)
+// 	at android.os.Looper.loop(Looper.java:148)
+// 	at android.app.ActivityThread.main(ActivityThread.java:5417)
+// 	at java.lang.reflect.Method.invoke(Native Method)
+// 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)
+// 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)
+// 
+** Monkey aborted due to error.
+Events injected: 29
+:Sending rotation degree=0, persist=false
+:Dropped: keys=0 pointers=0 trackballs=0 flips=0 rotations=0
+## Network stats: elapsed time=8366ms (0ms mobile, 0ms wifi, 8366ms not connected)
+** System appears to have crashed at event 29 of 200 using seed 1458211497814

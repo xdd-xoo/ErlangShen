@@ -1,2 +1,0 @@
-{"com.nd.android.pandahome2.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Fail // CRASH: com.google.process.gapps (pid 11240)","Uninstall":"Pass"}}
-{"com.oupeng.mini.android.apk":{"Install":"Pass","Launch":"Pass","Monkey":"Pass","Uninstall":"Pass"}}

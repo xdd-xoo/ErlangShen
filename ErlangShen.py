@@ -6,6 +6,7 @@ import time
 import os
 import sys
 import getopt
+from string import atoi
 import xml.etree.ElementTree as et
 import multiprocessing
 from tools import Color
@@ -26,17 +27,21 @@ def get_apk_list(apkSrc):
     else:
         return os.popen('dir /b %s | findstr  ".apk"'%apkSrc).read().strip().split('\n')
 
-def get_apk_src():
+def get_apk_src(appPath=None):
 
     """
     Append all apks list like:
     ['\\\\cntds-server\\docs\\apks\\com.baidu.appsearch_035041.apk',
     '\\\\cntds-server\\docs\\apks\\com.estrongs.android.pop_501.apk']
     """
-    tree = et.parse('path_config.xml')
-    root = tree.getroot()
-    apk_src = root.find('apkSrc').findall('path')
-    return [os.path.join(src,apk) for src in [src.get('name') for src in apk_src] for apk in get_apk_list(src)]
+    if appPath:
+        return [os.path.join(appPath,apk) for apk in get_apk_list(appPath)]
+    else:
+
+        tree = et.parse('path_config.xml')
+        root = tree.getroot()
+        apk_src = root.find('apkSrc').findall('path')
+        return [os.path.join(src,apk) for src in [src.get('name') for src in apk_src] for apk in get_apk_list(src)]
 
 def generate_apk_info(apk_path):
         print "generate %s info "%os.path.split(apk_path)[-1] 
@@ -173,10 +178,10 @@ def test_launch_apk(device,pkg_name,launchable_activity,time_stamp):
 
 
 
-def test_monkey_run(device,pkg_name,time_stamp):
+def test_monkey_run(device,pkg_name,time_stamp,throttle=500,event=200):
     
     print "start monkey test on %s "%pkg_name
-    command = 'adb -s %s shell monkey -p %s -v -v -v --throttle 500 200'%(device,pkg_name)
+    command = 'adb -s %s shell monkey -p %s -v -v -v --throttle %d %d'%(device,pkg_name,throttle,event)
     clr.print_blue_text(command+'\n')
     monkey_result = os.popen(command).read().strip().encode('utf8')
     if monkey_result.find("Monkey finished") != -1:
@@ -194,7 +199,7 @@ def test_monkey_run(device,pkg_name,time_stamp):
         if not failure_reason:
             return {"Monkey":"failure reason could not be found or the app install failed"}
         current_time_stamp =  time.strftime("%Y%m%d_%H-%M-%S", time.localtime())
-        dump_path = "log" + os.sep + pkg_name + "_" + current_time_stamp
+        dump_path = "log" + os.sep + pkg_name + "_" + device + "_" + current_time_stamp
         os.system("mkdir %s"%dump_path)
         os.system("adb -s %s pull /data/anr %s"%(device,dump_path))
         os.system("adb -s %s pull /data/tombstones %s"%(device,dump_path))
@@ -225,23 +230,55 @@ def config_counter():
         counter_dict[device]={"pass_counter":0,"warning_counter":0,"fail_counter":0}
     return counter_dict
 
+def usage():
+    print "Please check ErLangShen script usage:\n"
+    print "     python ErlangShen.py {logPath}"
+    print "         -h|--help       :   print help message"
+    print "         -t|--throttle   :   Interval of event"
+    print "         -e|--evenCount  :   Total event numbers"
+    print "         -m|--monkey     :   monkey enable or not"
+    print "         -a|--appPath    :   apks location path"
+
+
 def main():
+    global throttle
+    global eventCount
+    global monkey
+    global appPath
     global apk_info
     global log_path 
     global time_stamp
     global config_counter
+    if len(sys.argv[1:])==4:
+        throttle = atoi(sys.argv[1])
+        eventCount = atoi(sys.argv[2])
+        monkey =  sys.argv[3] or True
+        if os.path.exists(sys.argv[4]):
+            appPath = sys.argv[4] or None
+        else : 
+            appPath = None
+            clr.print_blue_text("App path config in path_config.xml")
+    else :
+        throttle = 500
+        eventCount = 200
+        monkey = True
+        appPath = None  
+        print "Throttle    : %d"%throttle
+        print "Event Count : %d"%eventCount 
+        print "Monkey      : %s"%str(monkey)
+        print "App Path    : %s"%str(appPath)
+    
     time_stamp = time.strftime("%m%d%Y_%H.%M.%S", time.localtime())
     start_time_stamp = time.strftime("%m/%d/%Y %X", time.localtime())
     for device in get_devices_list():
         report_path= "ErLangShen_Report_%s_%s"%(device,time_stamp)
         init_report(report_path)
 
-
     ErlangShen_weapons = {"install" : test_install_apk,\
                           "launch"  : test_launch_apk,\
                           "monkey"  : test_monkey_run,\
                           "uninstall" : test_uninstall_apk}
-
+   
     try:
         task_len = len(get_devices_list())
         if not task_len :
@@ -252,7 +289,7 @@ def main():
         task_len_root = len(get_devices_list())
         if task_len != task_len_root:
             clr.print_red_text("Having devices root failed. ErLangShen would give up these devices!!!")
-        apk_list = get_apk_src()
+        apk_list = get_apk_src(appPath)
         app_index = 1
         counter_dict = config_counter()
         for apk in apk_list: 
@@ -287,7 +324,7 @@ def main():
                         clr.print_green_text("ErlangShen would spawn %d %s process(es) to test %s on all devices"%(task_len, weapon, os.path.split(apk)[-1]))
                         pool = multiprocessing.Pool(processes=task_len)
                         for device in get_devices_list():
-                            child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,)))
+                            child_result.append(pool.apply_async(ErlangShen_weapons[weapon],(device,apk_info[0],time_stamp,throttle,eventCount,)))
                         pool.close()
                         pool.join()                        
                         result_of_one_loop.append(child_result)
@@ -413,8 +450,7 @@ def main():
         print "[Exception]" + str(e) 
     finally:
         clr.print_green_text("================ALL TEST COMPLETE===============")
-        sys.exit()
-        
+        sys.exit()      
 
 if __name__ == '__main__':
     main()
