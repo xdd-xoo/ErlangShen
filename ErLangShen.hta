@@ -1,0 +1,146 @@
+<HTML>
+<HEAD>
+<TITLE>ErLangShen - PDT 3rdParty APP Test</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=10"/>
+
+<HTA:APPLICATION
+ID="ErLangShen"
+APPLICATIONNAME="ErLangShen"
+BORDER="thick"
+BORDERSTYLE=""
+VERSION="1.0"
+SCROLL="yes"
+ICON="magnify.exe"
+INNERBORDER="no"
+CONTEXTMENU="no"
+CAPTION="yes"
+MAXIMIZEBUTTON="no"
+MINIMIZEBUTTON="no"
+SHOWINTASKBAR="yes"
+SINGLEINSTANCE="no"
+SYSMENU="yes"
+WINDOWSTATE="normal"
+NAVIGABLE="yes"
+/>
+
+<style>
+* {font-family:serif}
+body {background: #bfcfff;}
+td {padding: 4px;font-size:14px;}
+.slogon {color:#888888;font-size:12px;text-align:center;}
+.box{
+    border:2px solid #000;
+    border-radius:100px;
+    width:100px;
+    height:100px;
+    position: relative;
+    overflow:hidden;
+    background:#fff;
+    display:inline-block;
+}
+.back{
+    background: #000;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100px;
+    left: 25%;
+    
+}
+.backs{
+    background: #fff;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    border-radius: 100px;
+    left: 25%;
+    bottom:0;
+    
+}
+.right_d{
+    background:#000;
+    width:50px;
+    height:100px;
+    right:0;
+    position:absolute;
+}
+.n1{
+    background:#fff;
+    width:20px;
+    height:20px;
+    border-radius:20px;
+    position:absolute;
+    top:25%;
+    left:25%;
+}
+.n2{
+    background:#000;
+    width:20px;
+    height:20px;
+    border-radius:20px;
+    position:absolute;
+    bottom:25%;
+    left:25%;
+} 
+</style>
+
+<script>
+function runTest() {
+	var appPath = document.getElementById("appPath").value;
+	if (appPath == "") {
+		alert("App Path is empty!");
+		return;
+	}
+	var monkeyThrottle = document.getElementById("monkeyThrottle").value;
+	if (monkeyThrottle == "") {
+		alert("Monkey Throttle is empty!");
+		return;
+	}
+	var monkeyEventCount = document.getElementById("monkeyEventCount").value;
+	if (monkeyEventCount == "") {
+		alert("Monkey Event Count is empty!");
+		return;
+	}
+	
+	var shell = new ActiveXObject("WScript.Shell");
+	shell.run("ErlangShen.bat "+monkeyThrottle+" "+monkeyEventCount+" \"Yes\" \""+appPath+"\"");
+}
+
+window.onload = function(){
+	window.resizeTo(800, 450);
+};
+</script>
+</HEAD>
+<BODY>
+<div style="text-align:center;vertical-align:middle;font-size:60px;margin-bottom:10px;">
+<div class="box" style="text-align:center;vertical-align:middle;">
+    <div class="right_d"></div>
+    <span class="back">
+        <span class="n1"></span>
+    </span>
+    <span class="backs">
+        <span class="n2"></span>
+    </span>
+</div>
+ErLangShen
+</div>
+<fieldset>
+<legend><i>3rdParty APP Test Settings</i></legend>
+<table>
+<tr><td>APP Path</td><td><input type="text" id="appPath" name="appPath" style="width:600px;" value="C:\3rdPartyApp\ChinaTop100"></td></tr>
+<tr><td>Monkey Throttle</td><td><input style="width:200px;" type="text" id="monkeyThrottle" name="monkeyThrottle" value="500"></td></tr>
+<tr><td>Monkey Event Count</td><td><input style="width:200px;" type="text" id="monkeyEventCount" name="monkeyEventCount" value="600"></td></tr>
+</table>
+</fieldset>
+<p style="text-align:center;">
+<button onclick="javascript:runTest()" style="font-size:1.5em;width:300px;cursor:pointer;background:yellow">Start APP Test</button>
+</p>
+</table>
+
+<div class='slogon'>
+<p>Powered By PDT.CHINA.TDA. All Rights Reserved &copy; 2016</p>
+</div>
+
+</BODY>
+</HTML>
